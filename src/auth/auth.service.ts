@@ -15,8 +15,7 @@ export class AuthService {
     async signin(user: User) {
         
         return await this.usersRepository.findOneBy({
-            userName: user.userName,
-            password: user.password
+            userName: user.userName
         });
     }
 
@@ -26,7 +25,7 @@ export class AuthService {
         const hash = await argon.hash(user.password);
 
         // save username password
-        return await this.usersRepository.create({
+        return this.usersRepository.save({
             userName: user.userName,
             password: hash
         });
